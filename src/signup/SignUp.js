@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../components/contexts/UserContext";
 import "./SignUp.css";
 
 const SignUp = () => {
   const [error, setError] = useState(null);
+  const { createUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -11,9 +13,18 @@ const SignUp = () => {
     const password = form.password.value;
     console.log(email, password);
     if (password.length < 6) {
-      setError("Password should be 6 charactes or more");
+      setError("Password should be 6 character or more");
       return;
     }
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        form.reset();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div className="form-container">
