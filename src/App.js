@@ -8,6 +8,8 @@ import Inventory from "./components/Inventory/Inventory";
 import { productsAndCartLoader } from "./loaders/productsAndCartLoader";
 import Login from "./login/Login";
 import SignUp from "./signup/SignUp";
+import Shipping from "./components/Shipping/Shipping";
+import RequireAuth from "./routes/RequireAuth";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +30,14 @@ function App() {
         {
           path: "inventory",
           element: <Inventory></Inventory>,
+        },
+        {
+          path: "shipping",
+          element: (
+            <RequireAuth>
+              <Shipping></Shipping>
+            </RequireAuth>
+          ),
         },
         {
           path: "about",
